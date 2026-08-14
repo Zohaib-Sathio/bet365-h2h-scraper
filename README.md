@@ -1,5 +1,7 @@
 # bet365 H2H percentage extractor
 
+**Live:** <https://bet365-h2h.onrender.com>
+
 Pulls the head-to-head win / draw / loss percentages that bet365 shows behind
 the statistics icon for every upcoming football fixture, and serves them as a
 live web page plus Excel / CSV downloads.
@@ -64,10 +66,10 @@ ngrok http 8000
 `Dockerfile` and `render.yaml` are included; the app reads `$PORT`, so
 `python webapp.py` is a valid start command on any platform that injects one.
 
-* **Render (free)** — connect the repo, it picks up `render.yaml`. The free
-  instance sleeps after 15 minutes idle and cold-starts in 30-60 s, so point a
-  free uptime pinger (cron-job.org, UptimeRobot) at `/healthz` every 10 minutes
-  to keep it warm. 750 instance-hours/month covers one always-on service.
+* **Render (free)** — this is where it runs today, service `bet365-h2h` in
+  Frankfurt, deployed from `main` on every push. The free instance sleeps after
+  15 minutes idle and cold-starts in 30-60 s, so `.github/workflows/keepalive.yml`
+  pings `/healthz` every 10 minutes to keep it warm.
 * **A small VPS / Oracle Cloud Always Free** — `docker build . && docker run -p
   80:8000`, always on, no cold starts.
 * **Not serverless** (Vercel, Lambda). A full sweep takes minutes and the

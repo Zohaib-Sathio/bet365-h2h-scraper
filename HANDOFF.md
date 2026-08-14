@@ -123,13 +123,20 @@ Source (bet365 stats page)
 
 ## 4. Live deployment
 
-```bash
-python -m uvicorn webapp:app --host 0.0.0.0 --port 8000
-ngrok http 8000
-```
+**https://bet365-h2h.onrender.com** — Render free plan, service
+`srv-d9vhsns9v7es73907q3g` (`bet365-h2h`, Frankfurt), built from
+`github.com/Zohaib-Sathio/bet365-h2h-scraper` on every push to `main`.
+Build `pip install -r requirements.txt`, start
+`python -m uvicorn webapp:app --host 0.0.0.0 --port $PORT --proxy-headers`,
+health check `/healthz`, `PYTHON_VERSION=3.12.6`.
 
-The public URL is whatever ngrok prints. Free ngrok shows a one-click
-interstitial ("Visit Site") before the page on the first visit from a browser.
+The free instance sleeps after 15 minutes idle (30-60 s cold start), so a
+GitHub Actions cron in `.github/workflows/keepalive.yml` pings `/healthz`
+every 10 minutes. 512 MB / 0.1 CPU is enough because the work is network-bound;
+the first sweep after boot completed in about a minute.
+
+For a local run instead: `python -m uvicorn webapp:app --port 8000`, optionally
+exposed with `ngrok http 8000` (free ngrok shows a one-click interstitial).
 
 Timings measured on the live feed: 6-hour window ≈ 45 s, ~113 matches;
 7-day ≈ 90 s, 889 matches; 10-day ≈ 3 min, 1690 matches across ~410 leagues.
