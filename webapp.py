@@ -79,8 +79,20 @@ async def get_rows(
 
         name = SPORTS.get(sport_id, str(sport_id))
         log.info("scraping %s, %g-hour window...", name, hours)
-        token = await asyncio.to_thread(get_token)
-        rows = await scraper.run(token.value, sport_id=sport_id, window_hours=hours)
+        try:
+            token = await asyncio.to_thread(get_token)
+            rows = await scraper.run(token.value, sport_id=sport_id, window_hours=hours)
+        except Exception as exc:
+            rows = []
+            log.error("scrape failed for %s / %g h: %s", name, hours, exc)
+
+        # Serve the previous sweep rather than an empty page when the feed is
+        # briefly unavailable. An empty result is only cached if there was
+        # nothing cached before.
+        if not rows and hit:
+            log.warning("keeping %d cached %s rows", len(hit[1]), name)
+            return hit[1], hit[0]
+
         stamp = time.time()
         _cache[key] = (stamp, rows)
         log.info("cached %d %s rows for the %g-hour window", len(rows), name, hours)
@@ -99,9 +111,20 @@ async def get_leagues(sport_id: int, refresh: bool = False) -> list[League]:
         if hit and not refresh and time.time() - hit[0] < LEAGUE_TTL:
             return hit[1]
 
-        token = await asyncio.to_thread(get_token)
-        async with Feed(token.value) as feed:
-            leagues = await scraper.load_leagues(feed, sport_id)
+        try:
+            token = await asyncio.to_thread(get_token)
+            async with Feed(token.value) as feed:
+                leagues = await scraper.load_leagues(feed, sport_id)
+        except Exception as exc:
+            leagues = []
+            log.error("league refresh failed for sport %s: %s", sport_id, exc)
+
+        # Never replace a good list with an empty one. A transient upstream
+        # hiccup would otherwise leave the filters blank until the next refresh.
+        if not leagues and hit:
+            log.warning("keeping %d cached leagues for sport %s", len(hit[1]), sport_id)
+            return hit[1]
+
         _leagues[sport_id] = (time.time(), leagues)
         return leagues
 

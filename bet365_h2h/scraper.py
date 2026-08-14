@@ -20,19 +20,45 @@ def _pct(part: int, whole: int) -> int:
     return int(math.floor((part / whole) * 100 + 0.5))
 
 
+async def _tree(feed: Feed) -> list[dict]:
+    """The full competition tree for every sport.
+
+    ``config_tree/1`` is not "sport 1" — the path segment is a portal config
+    id, and id 1 resolves to a cut-down tree that only carries competitions
+    with something happening right now. Overnight, when no football is being
+    played, football disappears from it entirely. The response does however
+    carry the real config id in ``_configid``; requesting the tree under that
+    id returns the complete portal tree at any hour, which is what the filters
+    and the fixture sweep are built from.
+    """
+    envelope = await feed.get("config_tree/1")
+    doc = envelope.get("doc") or []
+    config_id = (doc[0].get("_configid") if doc else None) or None
+
+    if config_id:
+        try:
+            full = Feed.payload(await feed.get(f"config_tree/{config_id}"))
+            if full:
+                return full if isinstance(full, list) else [full]
+        except FeedError as exc:
+            log.warning("full tree (config %s) failed, falling back: %s", config_id, exc)
+
+    data = Feed.payload(envelope)
+    if not data:
+        raise FeedError("empty competition tree")
+    return data if isinstance(data, list) else [data]
+
+
 async def load_categories(
     feed: Feed, sport_id: int = DEFAULT_SPORT
 ) -> list[tuple[int, str, str]]:
     """Every country / region bet365 lists, as (rcid, country, continent).
 
-    The tree endpoint returns all sports in a single payload, so the sport is
-    selected by filtering on ``_sid`` rather than by changing the path.
+    The tree covers all sports in one payload, so the sport is selected by
+    filtering on ``_sid`` rather than by changing the path.
     """
-    data = Feed.payload(await feed.get("config_tree/1"))
-    if not data:
-        raise FeedError("empty competition tree")
+    sports = await _tree(feed)
 
-    sports = data if isinstance(data, list) else [data]
     out: dict[int, tuple[str, str]] = {}
     for sport in sports:
         if sport.get("_sid") != sport_id:
@@ -45,6 +71,10 @@ async def load_categories(
             # code, so they get their own bucket in the continent filter.
             continent = ((category.get("cc") or {}).get("continent")) or "International"
             out[int(rcid)] = (category.get("name") or "Unknown", continent)
+
+    if not out:
+        raise FeedError(f"competition tree carried no categories for sport {sport_id}")
+
     return sorted(
         ((rcid, name, continent) for rcid, (name, continent) in out.items()),
         key=lambda row: (row[2], row[1]),
