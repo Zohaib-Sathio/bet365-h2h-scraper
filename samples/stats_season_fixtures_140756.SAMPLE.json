@@ -1,0 +1,438 @@
+{
+ "queryUrl": "stats_season_fixtures/140756",
+ "doc": [
+  {
+   "event": "stats_season_fixtures",
+   "_dob": 1786701620,
+   "_maxage": 500,
+   "data": {
+    "_id": "140756",
+    "_doc": "season",
+    "_utid": 17,
+    "_sid": 1,
+    "name": "Premier League 26/27",
+    "abbr": "PL 26/27",
+    "start": {
+     "_doc": "time",
+     "time": "00:00",
+     "date": "21/08/26",
+     "tz": "UTC",
+     "tzoffset": 0,
+     "uts": 1787270400
+    },
+    "end": {
+     "_doc": "time",
+     "time": "23:59",
+     "date": "30/05/27",
+     "tz": "UTC",
+     "tzoffset": 0,
+     "uts": 1811721599
+    },
+    "neutralground": false,
+    "friendly": false,
+    "currentseasonid": 140756,
+    "year": "26/27",
+    "matches": [
+     {
+      "_doc": "match",
+      "_doctype": "generic",
+      "_id": 72221154,
+      "_sid": 1,
+      "_rcid": 1,
+      "_tid": 1,
+      "_utid": 17,
+      "round": 1,
+      "week": 34,
+      "teams": {
+       "home": {
+        "_doc": "team",
+        "_id": 4871,
+        "_sid": 1,
+        "uid": 42,
+        "virtual": false,
+        "name": "Arsenal",
+        "mediumname": "Arsenal FC",
+        "abbr": "ARS",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       },
+       "away": {
+        "_doc": "team",
+        "_id": 4872,
+        "_sid": 1,
+        "uid": 11,
+        "virtual": false,
+        "name": "Coventry",
+        "mediumname": "Coventry City",
+        "abbr": "COV",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       }
+      },
+      "tobeannounced": false,
+      "postponed": false,
+      "stadiumid": 624,
+      "walkover": false,
+      "retired": false,
+      "comment": null,
+      "inlivescore": true,
+      "disqualified": false,
+      "neutralground": false,
+      "canceled": false,
+      "bestof": null,
+      "periods": null,
+      "result": {
+       "home": null,
+       "away": null,
+       "period": "nt",
+       "winner": null
+      },
+      "status": null,
+      "time": {
+       "_doc": "time",
+       "time": "19:00",
+       "date": "21/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787338800
+      },
+      "numberofperiods": 2,
+      "_seasonid": 140756,
+      "roundname": {
+       "_doc": "tableround",
+       "_id": 1,
+       "name": 1
+      }
+     },
+     {
+      "_doc": "match",
+      "_doctype": "generic",
+      "_id": 72221156,
+      "_sid": 1,
+      "_rcid": 1,
+      "_tid": 1,
+      "_utid": 17,
+      "round": 1,
+      "week": 34,
+      "teams": {
+       "home": {
+        "_doc": "team",
+        "_id": 1274472,
+        "_sid": 1,
+        "uid": 96,
+        "virtual": false,
+        "name": "Hull",
+        "mediumname": "Hull City",
+        "abbr": "HUL",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       },
+       "away": {
+        "_doc": "team",
+        "_id": 4862,
+        "_sid": 1,
+        "uid": 35,
+        "virtual": false,
+        "name": "Manchester United",
+        "mediumname": "Manchester United",
+        "abbr": "MUN",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       }
+      },
+      "tobeannounced": false,
+      "postponed": false,
+      "stadiumid": 1138,
+      "walkover": false,
+      "retired": false,
+      "comment": null,
+      "inlivescore": true,
+      "disqualified": false,
+      "neutralground": false,
+      "canceled": false,
+      "bestof": null,
+      "periods": null,
+      "result": {
+       "home": null,
+       "away": null,
+       "period": "nt",
+       "winner": null
+      },
+      "status": null,
+      "time": {
+       "_doc": "time",
+       "time": "11:30",
+       "date": "22/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787398200
+      },
+      "numberofperiods": 2,
+      "_seasonid": 140756,
+      "roundname": {
+       "_doc": "tableround",
+       "_id": 1,
+       "name": 1
+      }
+     },
+     {
+      "_doc": "match",
+      "_doctype": "generic",
+      "_id": 72221158,
+      "_sid": 1,
+      "_rcid": 1,
+      "_tid": 1,
+      "_utid": 17,
+      "round": 1,
+      "week": 34,
+      "teams": {
+       "home": {
+        "_doc": "team",
+        "_id": 4867,
+        "_sid": 1,
+        "uid": 48,
+        "virtual": false,
+        "name": "Everton",
+        "mediumname": "Everton FC",
+        "abbr": "EVE",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       },
+       "away": {
+        "_doc": "team",
+        "_id": 342002,
+        "_sid": 1,
+        "uid": 7,
+        "virtual": false,
+        "name": "Crystal Palace",
+        "mediumname": "Crystal Palace",
+        "abbr": "CRY",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       }
+      },
+      "tobeannounced": false,
+      "postponed": false,
+      "stadiumid": 83422,
+      "walkover": false,
+      "retired": false,
+      "comment": null,
+      "inlivescore": true,
+      "disqualified": false,
+      "neutralground": false,
+      "canceled": false,
+      "bestof": null,
+      "periods": null,
+      "result": {
+       "home": null,
+       "away": null,
+       "period": "nt",
+       "winner": null
+      },
+      "status": null,
+      "time": {
+       "_doc": "time",
+       "time": "14:00",
+       "date": "22/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787407200
+      },
+      "numberofperiods": 2,
+      "_seasonid": 140756,
+      "roundname": {
+       "_doc": "tableround",
+       "_id": 1,
+       "name": 1
+      }
+     },
+     {
+      "_doc": "match",
+      "_doctype": "generic",
+      "_id": 72221160,
+      "_sid": 1,
+      "_rcid": 1,
+      "_tid": 1,
+      "_utid": 17,
+      "round": 1,
+      "week": 34,
+      "teams": {
+       "home": {
+        "_doc": "team",
+        "_id": 4877,
+        "_sid": 1,
+        "uid": 32,
+        "virtual": false,
+        "name": "Ipswich",
+        "mediumname": "Ipswich Town",
+        "abbr": "IPS",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       },
+       "away": {
+        "_doc": "team",
+        "_id": 4864,
+        "_sid": 1,
+        "uid": 41,
+        "virtual": false,
+        "name": "Sunderland",
+        "mediumname": "Sunderland AFC",
+        "abbr": "SUN",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       }
+      },
+      "tobeannounced": false,
+      "postponed": false,
+      "stadiumid": 2188,
+      "walkover": false,
+      "retired": false,
+      "comment": null,
+      "inlivescore": true,
+      "disqualified": false,
+      "neutralground": false,
+      "canceled": false,
+      "bestof": null,
+      "periods": null,
+      "result": {
+       "home": null,
+       "away": null,
+       "period": "nt",
+       "winner": null
+      },
+      "status": null,
+      "time": {
+       "_doc": "time",
+       "time": "14:00",
+       "date": "22/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787407200
+      },
+      "numberofperiods": 2,
+      "_seasonid": 140756,
+      "roundname": {
+       "_doc": "tableround",
+       "_id": 1,
+       "name": 1
+      }
+     },
+     {
+      "_doc": "match",
+      "_doctype": "generic",
+      "_id": 72221162,
+      "_sid": 1,
+      "_rcid": 1,
+      "_tid": 1,
+      "_utid": 17,
+      "round": 1,
+      "week": 34,
+      "teams": {
+       "home": {
+        "_doc": "team",
+        "_id": 912229,
+        "_sid": 1,
+        "uid": 14,
+        "virtual": false,
+        "name": "Nottingham Forest",
+        "mediumname": "Nottingham Forest",
+        "abbr": "NFO",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       },
+       "away": {
+        "_doc": "team",
+        "_id": 4860,
+        "_sid": 1,
+        "uid": 34,
+        "virtual": false,
+        "name": "Leeds United",
+        "mediumname": "Leeds United",
+        "abbr": "LEE",
+        "nickname": null,
+        "iscountry": false,
+        "haslogo": true
+       }
+      },
+      "tobeannounced": false,
+      "postponed": false,
+      "stadiumid": 2230,
+      "walkover": false,
+      "retired": false,
+      "comment": null,
+      "inlivescore": true,
+      "disqualified": false,
+      "neutralground": false,
+      "canceled": false,
+      "bestof": null,
+      "periods": null,
+      "result": {
+       "home": null,
+       "away": null,
+       "period": "nt",
+       "winner": null
+      },
+      "status": null,
+      "time": {
+       "_doc": "time",
+       "time": "14:00",
+       "date": "22/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787407200
+      },
+      "numberofperiods": 2,
+      "_seasonid": 140756,
+      "roundname": {
+       "_doc": "tableround",
+       "_id": 1,
+       "name": 1
+      }
+     }
+    ],
+    "tournaments": {
+     "1": {
+      "_doc": "statistics_table",
+      "_id": "108752",
+      "tournamentid": 1,
+      "name": "Premier League",
+      "abbr": "Premier Leag",
+      "groupname": null,
+      "maxrounds": "38",
+      "seasonid": "140756",
+      "seasontype": "21",
+      "seasontypename": "Regular Season",
+      "seasontypeunique": "68",
+      "start": {
+       "_doc": "time",
+       "time": "00:00",
+       "date": "21/08/26",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1787270400
+      },
+      "end": {
+       "_doc": "time",
+       "time": "23:59",
+       "date": "30/05/27",
+       "tz": "UTC",
+       "tzoffset": 0,
+       "uts": 1811721540
+      },
+      "roundbyround": true,
+      "order": null
+     }
+    }
+   }
+  }
+ ]
+}

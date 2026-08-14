@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.cache/
+output/*.xlsx
+output/*.csv
+server.log
+ngrok.log
+sh.html
+*.png
+*.pdf
+.playwright-mcp/
+bb.json
