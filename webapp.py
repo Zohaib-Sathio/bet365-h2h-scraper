@@ -50,6 +50,18 @@ _locks: dict[tuple[int, float], asyncio.Lock] = {}
 _leagues: dict[int, tuple[float, list[League]]] = {}
 _league_lock = asyncio.Lock()
 
+# Last failure per task, surfaced by /healthz. Render keeps no log the visitor
+# can read, so without this an upstream outage is indistinguishable from a
+# genuinely empty fixture list.
+_errors: dict[str, str] = {}
+
+
+def _note(task: str, exc: BaseException | None) -> None:
+    if exc is None:
+        _errors.pop(task, None)
+    else:
+        _errors[task] = f"{type(exc).__name__}: {exc}"[:300]
+
 
 def _lock(key: tuple[int, float]) -> asyncio.Lock:
     if key not in _locks:
@@ -82,8 +94,10 @@ async def get_rows(
         try:
             token = await asyncio.to_thread(get_token)
             rows = await scraper.run(token.value, sport_id=sport_id, window_hours=hours)
+            _note(f"rows:{name}:{hours:g}", None)
         except Exception as exc:
             rows = []
+            _note(f"rows:{name}:{hours:g}", exc)
             log.error("scrape failed for %s / %g h: %s", name, hours, exc)
 
         # Serve the previous sweep rather than an empty page when the feed is
@@ -115,8 +129,10 @@ async def get_leagues(sport_id: int, refresh: bool = False) -> list[League]:
             token = await asyncio.to_thread(get_token)
             async with Feed(token.value) as feed:
                 leagues = await scraper.load_leagues(feed, sport_id)
+            _note(f"leagues:{SPORTS.get(sport_id, sport_id)}", None)
         except Exception as exc:
             leagues = []
+            _note(f"leagues:{SPORTS.get(sport_id, sport_id)}", exc)
             log.error("league refresh failed for sport %s: %s", sport_id, exc)
 
         # Never replace a good list with an empty one. A transient upstream
@@ -282,6 +298,7 @@ async def healthz():
         "leagues_known": {
             SPORTS.get(sid, str(sid)): len(v[1]) for sid, v in _leagues.items()
         },
+        "errors": _errors,
     }
 
 
