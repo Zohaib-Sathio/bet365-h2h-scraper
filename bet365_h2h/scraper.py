@@ -21,32 +21,41 @@ def _pct(part: int, whole: int) -> int:
 
 
 async def _tree(feed: Feed) -> list[dict]:
-    """The full competition tree for every sport.
+    """The competition tree for every sport, merged across both portal configs.
 
     ``config_tree/1`` is not "sport 1" — the path segment is a portal config
-    id, and id 1 resolves to a cut-down tree that only carries competitions
-    with something happening right now. Overnight, when no football is being
-    played, football disappears from it entirely. The response does however
-    carry the real config id in ``_configid``; requesting the tree under that
-    id returns the complete portal tree at any hour, which is what the filters
-    and the fixture sweep are built from.
+    id, and the response carries a second id in ``_configid``. Either one can
+    come back cut down to whatever happens to be in play: config 1 has dropped
+    football overnight, and the ``_configid`` tree has come back holding
+    nothing but table tennis. Which of the two is complete is not stable, so
+    both are fetched and concatenated; ``load_categories`` already folds
+    duplicate sports together by ``_sid``.
     """
     envelope = await feed.get("config_tree/1")
     doc = envelope.get("doc") or []
     config_id = (doc[0].get("_configid") if doc else None) or None
 
+    trees: list[dict] = []
+
+    def add(data: Any) -> None:
+        if isinstance(data, list):
+            trees.extend(entry for entry in data if isinstance(entry, dict))
+        elif isinstance(data, dict):
+            trees.append(data)
+
+    add(Feed.payload(envelope))
+
     if config_id:
         try:
-            full = Feed.payload(await feed.get(f"config_tree/{config_id}"))
-            if full:
-                return full if isinstance(full, list) else [full]
+            add(Feed.payload(await feed.get(f"config_tree/{config_id}")))
         except FeedError as exc:
-            log.warning("full tree (config %s) failed, falling back: %s", config_id, exc)
+            log.warning(
+                "tree for config %s failed, using config 1 alone: %s", config_id, exc
+            )
 
-    data = Feed.payload(envelope)
-    if not data:
+    if not trees:
         raise FeedError("empty competition tree")
-    return data if isinstance(data, list) else [data]
+    return trees
 
 
 async def load_categories(
